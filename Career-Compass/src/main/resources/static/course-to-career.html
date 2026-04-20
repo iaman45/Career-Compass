@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Course to Career - EduApp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+        font-family: 'Quicksand', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #1e1e2f;
+        color: #fff;
+    }
+    header {
+        text-align: center;
+        padding: 30px 0 10px 0;
+    }
+    header h1 {
+        font-size: 2.5rem;
+        color: #9b59b6;
+    }
+    .filters {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px 0 40px 0;
+    }
+    .filters select {
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        background: #2c2c3e;
+        color: white;
+    }
+    .course-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;  /* center the cards (or flex-start / flex-end) */
+    column-gap: 20px;         /* horizontal gap */
+    row-gap: 40px;            /* vertical gap */
+    padding-bottom: 20px;
+}
+
+    .course-card {
+        background: #2c2c3e;
+        border-radius: 12px;
+        width: 250px;
+        padding: 20px;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+    .course-card h3 {
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+        color: #f1c40f;
+    }
+    .course-card p {
+        font-size: 0.9rem;
+        color: #ccc;
+    }
+    #courseDetailsPanel {
+        max-width: 900px;
+        margin: 20px auto;
+        background: #2c2c3e;
+        padding: 25px;
+        border-radius: 12px;
+        display: none;
+        animation: fadeIn 0.4s ease;
+    }
+    #courseDetailsPanel h2 {
+        color: #f1c40f;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    #flowContainer {
+        position: relative;
+        width: 100%;
+        min-height: 500px;
+    }
+    .node {
+        position: absolute;
+        background: #2c2c3e;
+        border: 2px solid #f1c40f;
+        border-radius: 12px;
+        padding: 10px;
+        width: 220px;
+        text-align: left;
+        color: #fff;
+    }
+    .centerNode {
+        background: #f1c40f;
+        color: #1e1e2f;
+        font-weight: bold;
+        border-radius: 50%;
+        padding: 20px 25px;
+        text-align: center;
+    }
+    button#backBtn {
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        background: #f1c40f;
+        color: #1e1e2f;
+        cursor: pointer;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Course to Career Path</h1>
+</header>
+
+<div class="filters">
+  <select id="standardFilter">
+    <option value="12">12th</option>
+    <option value="10">10th</option>
+  </select>
+
+  <select id="streamFilter">
+    <option value="commerce" selected>Commerce</option>
+    <option value="pcm">PCM</option>
+    <option value="pcb">PCB</option>
+    <option value="pcmb">PCMB</option>
+    <option value="arts">Arts</option>
+  </select>
+</div>
+
+<div class="course-list" id="courseList"></div>
+<div id="courseDetailsPanel"></div>
+
+<script>
+  const standardFilter = document.getElementById("standardFilter");
+  const streamFilter = document.getElementById("streamFilter");
+  const courseList = document.getElementById("courseList");
+  const detailsPanel = document.getElementById("courseDetailsPanel");
+
+  // Commerce courses
+  const commerceDegreeCourses = [
+      {
+          name: "B.Com",
+          desc: "Accounting, Finance, Taxation",
+          data: {
+              "Industries/Sectors": "Banking, Insurance, Audit, Tax Consultancy, Corporate Finance",
+              "Govt. Exams": "UPSC (IAS, IFS), SSC CGL, RBI Grade B, IBPS PO, LIC AAO",
+              "Private Jobs": "Accountant, Auditor, Tax Consultant, Financial Analyst",
+              "Entrepreneurship": "Tax consultancy firm, Accounting services",
+              "Higher Education": "M.Com, MBA (Finance), CA, CMA"
+          }
+      },
+      {
+          name: "BBA",
+          desc: "Management, Entrepreneurship",
+          data: {
+              "Industries/Sectors": "FMCG, Retail, Consulting, Startups, HR, Marketing",
+              "Govt. Exams": "UPSC, SSC, State PSC, Bank PO",
+              "Private Jobs": "Management Trainee, HR Executive, Marketing Manager",
+              "Entrepreneurship": "Startup in retail, services, or e-commerce",
+              "Higher Education": "MBA, PGDM, Specialized Masters"
+          }
+      },
+      {
+          name: "BBE",
+          desc: "Economics + Business Strategy",
+          data: {
+              "Industries/Sectors": "Economic Research, Consulting, Analytics, Policy Making",
+              "Govt. Exams": "RBI Grade B (DEPR), IES, UPSC",
+              "Private Jobs": "Data Analyst, Economist, Policy Advisor",
+              "Entrepreneurship": "Economic consultancy",
+              "Higher Education": "MA Economics, MBA, M.Sc. Data Analytics"
+          }
+      },
+      {
+          name: "BMS",
+          desc: "Leadership, Strategy",
+          data: {
+              "Industries/Sectors": "Corporate Strategy, Operations, Project Management",
+              "Govt. Exams": "UPSC, SSC, Bank Exams",
+              "Private Jobs": "Operations Manager, Business Analyst, Project Coordinator",
+              "Entrepreneurship": "Business consultancy, Franchise ownership",
+              "Higher Education": "MBA, PGDM"
+          }
+      },
+      {
+          name: "BA Economics / Statistics / Psychology",
+          desc: "Analytical or Behavioral Sciences",
+          data: {
+              "Industries/Sectors": "Research, Analytics, Education, HR, Social Services",
+              "Govt. Exams": "UPSC, RBI Grade B, SSC, UGC NET",
+              "Private Jobs": "Research Analyst, Statistician, HR Specialist, Psychologist (with PG)",
+              "Entrepreneurship": "Research firm, Counseling services",
+              "Higher Education": "MA/M.Sc., M.Phil., PhD"
+          }
+      },
+      {
+          name: "BCA",
+          desc: "IT, Software",
+          data: {
+              "Industries/Sectors": "IT Services, Software Development, Data Science, FinTech",
+              "Govt. Exams": "SSC Scientific Assistant, NIC Scientist B, DRDO",
+              "Private Jobs": "Software Developer, Web Developer, Data Analyst",
+              "Entrepreneurship": "IT startup, App development",
+              "Higher Education": "MCA, M.Sc. IT, MBA (IT)"
+          }
+      }
+  ];
+
+  const commerceProfessionalCourses = [
+      {
+          name:"CA (Chartered Accountancy)",
+          desc:"ICAI",
+          data: {
+              "Industries/Sectors":"Audit Firms, Banking, Insurance, Corporate Finance, Tax Consultancy",
+              "Govt. Exams":"UPSC (IAS, IRS), RBI Grade B, SEBI Grade A",
+              "Private Jobs":"Auditor, Tax Consultant, Financial Controller, CFO",
+              "Entrepreneurship":"Independent CA practice, Audit/Tax firm",
+              "Higher Education":"CPA (US), CFA, MBA (Finance)"
+          }
+      },
+      {
+          name:"CS (Company Secretary)",
+          desc:"ICSI",
+          data: {
+              "Industries/Sectors":"Corporate Governance, Legal Compliance, MNCs, PSUs",
+              "Govt. Exams":"UPSC, State PSC (Law-related posts)",
+              "Private Jobs":"Company Secretary, Compliance Officer, Legal Advisor",
+              "Entrepreneurship":"Corporate law consultancy",
+              "Higher Education":"LLB, LLM, MBA (Corporate Law)"
+          }
+      },
+      {
+          name:"CMA (Cost & Management Accounting)",
+          desc:"ICMAI",
+          data: {
+              "Industries/Sectors":"Manufacturing, Cost Audit, Budgeting, Strategic Finance",
+              "Govt. Exams":"UPSC, PSU Finance Cadre Exams",
+              "Private Jobs":"Cost Accountant, Financial Analyst, Management Accountant",
+              "Entrepreneurship":"Cost consultancy firm",
+              "Higher Education":"CIMA (UK), MBA, CFA"
+          }
+      },
+      {
+          name:"Integrated MBA (5-Year Program)",
+          desc:"AICTE-approved",
+          data: {
+              "Industries/Sectors":"FMCG, Consulting, IT, Banking, Startups",
+              "Govt. Exams":"UPSC, SSC, Bank PO",
+              "Private Jobs":"Management Trainee, Business Analyst, Marketing Manager",
+              "Entrepreneurship":"Startup in services, retail, or tech",
+              "Higher Education":"PhD in Management, Executive MBA"
+          }
+      },
+      {
+          name:"B.Voc (Bachelor of Vocation)",
+          desc:"AICTE Skill-based",
+          data: {
+              "Industries/Sectors":"Banking, Retail, Logistics, Tourism, ITES",
+              "Govt. Exams":"SSC, RRB, PSU Clerical Exams",
+              "Private Jobs":"Operations Executive, Sales Officer, Customer Service Manager",
+              "Entrepreneurship":"Small business in chosen trade",
+              "Higher Education":"M.Voc, MBA, PG Diplomas"
+          }
+      }
+  ];
+
+  function toggleStreamFilter() {
+      streamFilter.style.display = (standardFilter.value === "10") ? "none" : "inline-block";
+  }
+
+  function renderCourses() {
+      const standard = standardFilter.value;
+      const stream = streamFilter.value;
+      courseList.innerHTML="";
+      courseList.style.display="flex";
+
+      if(standard==="12" && stream==="commerce") {
+          const degreeSection = document.createElement("div");
+          degreeSection.innerHTML=`<h2 style="color:#f1c40f; width:100%; text-align:center;">🎓 Degree Courses</h2>`;
+          commerceDegreeCourses.forEach(course=>{
+              const card = document.createElement("div");
+              card.className="course-card";
+              card.innerHTML=`<h3>${course.name}</h3><p>${course.desc}</p>`;
+              card.addEventListener("click",()=>showFlowChart(course));
+              degreeSection.appendChild(card);
+          });
+          courseList.appendChild(degreeSection);
+
+          const profSection = document.createElement("div");
+          profSection.innerHTML=`<h2 style="color:#f1c40f; width:100%; text-align:center;">🧮 Professional Courses</h2>`;
+          commerceProfessionalCourses.forEach(course=>{
+              const card = document.createElement("div");
+              card.className="course-card";
+              card.innerHTML=`<h3>${course.name}</h3><p>${course.desc}</p>`;
+              card.addEventListener("click",()=>showFlowChart(course));
+              profSection.appendChild(card);
+          });
+          courseList.appendChild(profSection);
+      } else {
+          courseList.innerHTML=`<p style="color:#ccc; text-align:center; width:100%;">No courses available for selected standard/stream.</p>`;
+      }
+      detailsPanel.style.display="none";
+  }
+
+  // ✅ UPDATED FLOWCHART FORMAT (TOP-DOWN)
+  function showFlowChart(course) {
+      courseList.style.display="none";
+      detailsPanel.innerHTML = `
+          <button id="backBtn">⬅ Back</button>
+          <h2>${course.name}</h2>
+          <div id="flowContainer"></div>
+      `;
+      detailsPanel.style.display="block";
+
+      const container = document.getElementById("flowContainer");
+      const center = document.createElement("div");
+      center.className="node centerNode";
+      center.innerText = course.name;
+      container.appendChild(center);
+
+      setTimeout(()=>{
+          const rect = container.getBoundingClientRect();
+          const centerX = rect.width / 2;
+          center.style.left = (centerX - center.offsetWidth/2) + "px";
+          center.style.top = "20px";
+
+          const keys = Object.keys(course.data);
+          const spacing = 130;
+          const startY = 140;
+
+          const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+          svg.style.position="absolute";
+          svg.style.left="0";
+          svg.style.top="0";
+          svg.style.width="100%";
+          svg.style.height="100%";
+          svg.style.pointerEvents="none";
+          container.appendChild(svg);
+
+          keys.forEach((key,i)=>{
+              const node = document.createElement("div");
+              node.className="node";
+              node.innerHTML=`<b>${key}:</b><br>${course.data[key]}`;
+              container.appendChild(node);
+
+              const x = centerX - 110;
+              const y = startY + i * spacing;
+              node.style.left = x + "px";
+              node.style.top = y + "px";
+
+              const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+              line.setAttribute("x1", centerX);
+              line.setAttribute("y1", 60);
+              line.setAttribute("x2", centerX);
+              line.setAttribute("y2", y + 50);
+              line.setAttribute("stroke","#f1c40f");
+              line.setAttribute("stroke-width","2");
+              svg.appendChild(line);
+          });
+      },0);
+
+      document.getElementById("backBtn").addEventListener("click", ()=>{
+          detailsPanel.style.display="none";
+          courseList.style.display="flex";
+          renderCourses();
+      });
+  }
+
+  standardFilter.addEventListener("change", ()=>{
+      toggleStreamFilter();
+      renderCourses();
+  });
+  streamFilter.addEventListener("change", renderCourses);
+
+  toggleStreamFilter();
+  renderCourses();
+</script>
+
+</body>
+</html>

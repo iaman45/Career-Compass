@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quiz</title>
+</head>
+<body>
+<h2 th:text="${question.question}">Question will appear here</h2>
+<form action="/submit-quiz" method="post">
+    <label>Your Answer:</label>
+    <input type="text" name="answer" required/>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

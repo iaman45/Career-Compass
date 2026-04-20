@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>J&K Top 10 Schools & Colleges</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Same font as dashboard -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="school.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        /* fallback for .hidden & modal style */
+        body { font-family: 'Quicksand', sans-serif; background:#f7f9ff; margin:0; color:#333;}
+        header { background:#fff; padding:20px; box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+        header h1 { margin:0; color:#6C63FF; text-align:center;}
+        .controls { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:15px;}
+        .controls input,.controls select{padding:10px;border-radius:8px;border:1px solid #ccc;outline:none;}
+        .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:20px; padding:20px;}
+        .card { background:#fff; padding:20px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+        .card h3 { margin-top:0; color:#6C63FF;}
+        .subjects span{background:#e6e4ff;padding:3px 8px;border-radius:6px;font-size:12px;margin-right:5px;}
+        .card-actions{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;}
+        .btn{padding:8px 14px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;font-weight:500;text-decoration:none;}
+        .btn-secondary{background:#42A5F5;color:#fff;}
+        .btn-primary{background:#7C4DFF;color:#fff;}
+        .btn:hover{opacity:0.9;}
+        footer{text-align:center;padding:20px;font-size:14px;color:#555;}
+        .hidden{display:none;}
+        /* Modal */
+        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:2000;}
+        .modal.active{display:flex;}
+        .modal-content{background:#fff;padding:20px;border-radius:12px;max-width:400px;width:90%;text-align:center;}
+    </style>
+</head>
+<body>
+<header>
+    <h1>Jammu & Kashmir - Schools</h1>
+    <div class="controls">
+        <input type="text" id="search" placeholder="Search by name, subject, or district">
+        <select id="boardFilter">
+            <option value="">All Boards</option>
+            <option value="CBSE">CBSE</option>
+            <option value="JKBOSE">JKBOSE</option>
+            <option value="ICSE">ICSE</option>
+            <option value="Other">Other</option>
+        </select>
+        <select id="sort">
+            <option value="rating">Sort by Rating</option>
+            <option value="name">Sort by Name</option>
+        </select>
+    </div>
+</header>
+
+<main>
+    <p id="resultsCount" style="text-align:center;margin-top:10px;"></p>
+    <div id="schoolsGrid" class="grid"></div>
+    <p id="noResults" class="hidden" style="text-align:center;">No schools found. Try another search or filter.</p>
+</main>
+
+<!-- Reminder Modal -->
+<div id="reminderModal" class="modal">
+    <div class="modal-content">
+        <h2 id="modalTitle">Set Reminder</h2>
+        <p>Add this to your Google Calendar:</p>
+        <button id="googleCalendar" class="btn btn-secondary">Add to Google Calendar</button>
+        <button id="closeModal" class="btn btn-primary">Close</button>
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 J&K Schools Directory | Data is for demonstration purposes only</p>
+</footer>
+
+<script>
+    // ========== ✅ LOGIN CHECK ==========
+    const loggedInStudent = JSON.parse(localStorage.getItem("student")) || null;
+    if(!loggedInStudent){
+        alert("❌ Please login first to view schools!");
+        window.location.href = "login.html";
+    }
+
+    // ========== Data ==========
+    const schools = [ /* same array as before */
+      { "id": 1, "name": "Delhi Public School, Jammu", "board": "CBSE","website":"https://dpsjammu.in/","address":"Residency Road, Jammu, J&K","subjects":["Science","Commerce","Arts"],"overview":"Top CBSE school in Jammu offering education up to Class 12."},
+      { "id": 2, "name": "GD Goenka Public School, Jammu","board":"CBSE","website":"https://gdgoenkajammu.org","address":"Gajansoo-Marh Road, Jammu, J&K","subjects":["Science","Commerce","Arts"],"overview":"Award-winning CBSE school with modern facilities."},
+      { "id": 3, "name": "Presentation Convent Sr. Secondary School, Jammu","board":"CBSE","website":"","address":"Gandhi Nagar, Jammu, J&K","subjects":["Science","Commerce","Arts"],"overview":"Girls-only CBSE school focusing on holistic development."},
+      { "id": 4, "name": "St. Joseph's Higher Secondary School, Baramulla","board":"JKBOSE","website":"http://sjskashmir.com","address":"Baramulla, Kashmir, J&K","subjects":["Science","Commerce","Arts"],"overview":"Missionary school offering education up to Class 12."},
+      { "id": 5, "name": "St. Peter’s Higher Secondary School","board":"ICSE","website":"http://stpeterschoolkaranbagh.com","address":"Karan Bagh, Jammu, J&K","subjects":["Science","Commerce","Arts"],"overview":"ICSE & ISC high school offering higher secondary education up to Class 12."},
+      { "id": 6, "name": "Leh Modern School","board":"ICSE","website":"http://www.lehmodernschool.com","address":"Choglamsar, Leh, J&K","subjects":["General Curriculum"],"overview":"ICSE-affiliated day school catering to higher secondary students in Leh."},
+      { "id": 7, "name": "Sainik School Nagrota","board":"CBSE","website":"https://www.sainikschoolnagrota.com","address":"Nagrota, Jammu, J&K","subjects":["Science","NDA Preparation","Humanities"],"overview":"Prestigious residential CBSE school offering classes up to Class XII with focus on NDA preparation."},
+      { "id": 8, "name": "Maharaja Harisingh Agricultural Collegiate School","board":"CBSE","website":"http://www.mhacnagbani.com","address":"Nagbani, Domana, Jammu, J&K","subjects":["Science","Agricultural Studies"],"overview":"Unique CBSE-affiliated boarding school up to Class XII with emphasis on agricultural education."},
+      { "id": 9, "name": "KC International School, Jammu","board":"CBSE","website":"https://kcinternationalschool.org/","address":"Akhnoor Road, Paloura, Jammu, J&K","subjects":["Science","Commerce","Arts"],"overview":"CBSE school offering classes up to Class XII with smart infrastructure and holistic learning."},
+      { "id": 10, "name": "BSF Senior Secondary School, Jammu","board":"CBSE","website":"https://www.bsfschooljammu.org/","address":"Paloura Camp, Jammu, J&K","subjects":["Medical","Non-Medical","Commerce","Arts"],"overview":"Residential CBSE school offering higher secondary education with strong infrastructure."}
+    ];
+
+    // ========== DOM ==========
+    const schoolsGrid = document.getElementById("schoolsGrid");
+    const searchInput = document.getElementById("search");
+    const boardFilter = document.getElementById("boardFilter");
+    const sortSelect = document.getElementById("sort");
+    const resultsCount = document.getElementById("resultsCount");
+    const noResults = document.getElementById("noResults");
+
+    const reminderModal = document.getElementById("reminderModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const closeModalBtn = document.getElementById("closeModal");
+    const googleCalendarBtn = document.getElementById("googleCalendar");
+
+    let selectedSchool = null;
+
+    // ========== Functions ==========
+    function generateSchoolCard(school) {
+      return `
+        <div class="card">
+          <h3>${school.name}</h3>
+          <p><strong>Board:</strong> ${school.board}</p>
+          <p><strong>Location:</strong> ${school.address}</p>
+          <div class="subjects">
+            ${school.subjects.map(sub => `<span>${sub}</span>`).join(" ")}
+          </div>
+          <p>${school.overview}</p>
+          <div class="card-actions">
+            <a href="${school.website}" target="_blank" class="btn btn-secondary">
+              <i data-feather="external-link"></i> Website
+            </a>
+            <button class="btn btn-primary" onclick="openReminderModal(${school.id})">
+              <i data-feather="bell"></i> Remind Me
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function getFilteredAndSortedSchools() {
+      let filtered = schools;
+
+      const searchValue = searchInput.value.toLowerCase();
+      if (searchValue) {
+        filtered = filtered.filter(s =>
+          s.name.toLowerCase().includes(searchValue) ||
+          s.subjects.some(sub => sub.toLowerCase().includes(searchValue)) ||
+          s.address.toLowerCase().includes(searchValue)
+        );
+      }
+
+      const boardValue = boardFilter.value;
+      if (boardValue) {
+        filtered = filtered.filter(s => s.board === boardValue);
+      }
+
+      const sortValue = sortSelect.value;
+      if (sortValue === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      return filtered;
+    }
+
+    function renderSchools() {
+      const filteredSchools = getFilteredAndSortedSchools();
+      schoolsGrid.innerHTML = "";
+
+      if (filteredSchools.length === 0) {
+        resultsCount.textContent = `No schools found`;
+        noResults.classList.remove("hidden");
+        return;
+      }
+
+      noResults.classList.add("hidden");
+      resultsCount.textContent = `Showing ${filteredSchools.length} of ${schools.length} schools`;
+
+      filteredSchools.forEach(school => {
+        schoolsGrid.innerHTML += generateSchoolCard(school);
+      });
+
+      feather.replace(); // refresh icons
+    }
+
+    window.openReminderModal = function(schoolId){
+      selectedSchool = schools.find(s => s.id === schoolId);
+      modalTitle.textContent = `Set Reminder for ${selectedSchool.name}`;
+      reminderModal.classList.add("active");
+    }
+
+    closeModalBtn.addEventListener("click", () => {
+      reminderModal.classList.remove("active");
+    });
+
+    googleCalendarBtn.addEventListener("click", () => {
+      if (selectedSchool) {
+        const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(selectedSchool.name)}+Admission+Reminder&details=${encodeURIComponent(selectedSchool.overview)}&location=${encodeURIComponent(selectedSchool.address)}`;
+        window.open(url, "_blank");
+      }
+    });
+
+    // Events
+    searchInput.addEventListener("input", renderSchools);
+    boardFilter.addEventListener("change", renderSchools);
+    sortSelect.addEventListener("change", renderSchools);
+
+    renderSchools();
+</script>
+</body>
+</html>

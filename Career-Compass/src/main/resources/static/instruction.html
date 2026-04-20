@@ -1,0 +1,22 @@
+<!-- src/main/resources/static/instruction.html  (or wherever you store it) -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Instructions</title></head>
+<body>
+<h1>Instructions — Read carefully</h1>
+<p>...your instruction text...</p>
+
+<!-- Start Quiz form -->
+<form action="/start-quiz" method="get">
+    <label>Topic:
+        <select name="topic">
+            <option value="general">General</option>
+            <option value="java">Java</option>
+            <option value="algorithms">Algorithms</option>
+        </select>
+    </label>
+    <input type="hidden" name="numQuestions" value="5" />
+    <button type="submit">Start AI Quiz</button>
+</form>
+</body>
+</html>

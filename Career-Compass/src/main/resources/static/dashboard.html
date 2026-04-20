@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Compass Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ————— Your same CSS ————— */
+        * { box-sizing: border-box; margin:0; padding:0; font-family: 'Quicksand', sans-serif; }
+        body { background-color: #e6f0ff; color:#333; scroll-behavior: smooth;}
+        header { background:#fff; padding:20px 50px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 4px 8px rgba(0,0,0,0.1); position:sticky; top:0; z-index:1000; }
+        .logo { font-size:26px; font-weight:700; color:#6C63FF; }
+        nav a { text-decoration:none; color:#333; margin:0 15px; font-weight:500; transition:0.3s; }
+        nav a:hover { color:#6C63FF; }
+        .header-buttons { display:flex; gap:10px; }
+        .btn { padding:14px 28px; border-radius:30px; font-weight:500; cursor:pointer; transition:0.3s; border:none; font-size:16px; }
+        .btn-login { background-color:#42A5F5; color:#fff; }
+        .btn-login:hover { background-color:#1E88E5; transform:scale(1.05); }
+        .btn-register { background-color:#7C4DFF; color:#fff; }
+        .btn-register:hover { background-color:#5E35B1; transform:scale(1.05); }
+
+        .hero {
+        background: linear-gradient(135deg, #7C4DFF, #AB47BC);
+        color: #fff;
+        text-align: center;
+        padding: 140px 20px 80px 20px;
+        }
+        .hero h1 { font-size: 52px; margin-bottom: 20px; }
+        .hero p { font-size: 20px; max-width: 650px; margin: 0 auto 30px auto; line-height: 1.6; }
+        .hero .btn-assessment {
+        background: linear-gradient(135deg, #FF6D00, #FF3D00, #FF6DDA, #6C63FF);
+        padding: 16px 36px;
+        border-radius: 30px;
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        .hero .btn-assessment:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .features { padding:60px 20px; display:flex; justify-content:center; }
+        .features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:30px 40px; max-width:1100px; width:100%; }
+        .feature-btn { background-color:#fff; border:2px solid #d0d0ff; border-radius:25px; padding:50px 20px; text-align:center; cursor:pointer; transition: all 0.3s ease, box-shadow 0.3s ease; display:flex; flex-direction:column; align-items:center; gap:15px; }
+        .feature-btn img { width:80px; height:80px; }
+        .feature-btn span { font-size:20px; font-weight:600; color:#333; }
+        .feature-btn:hover { background:linear-gradient(135deg,#6C63FF,#9A8CFF); color:#fff; transform:translateY(-10px) scale(1.05); box-shadow:0 12px 20px rgba(0,0,0,0.15); }
+
+        .features-grid button:nth-child(4) { grid-column:1/2; }
+        .features-grid button:nth-child(5) { grid-column:2/3; }
+
+        .contact { background-color:#fff; margin:50px auto 0 auto; max-width:900px; padding:40px 30px; border-radius:20px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
+        .contact h2 { text-align:center; font-size:32px; color:#6C63FF; margin-bottom:15px; }
+        .contact p { text-align:center; margin-bottom:30px; font-size:16px; color:#555; }
+        .contact form { display:flex; flex-direction:column; gap:15px; }
+        .contact input, .contact textarea { padding:12px 15px; border-radius:12px; border:1px solid #ccc; font-size:16px; outline:none; transition:0.3s ease; }
+        .contact input:focus, .contact textarea:focus { border-color:#6C63FF; box-shadow:0 0 5px rgba(108,99,255,0.3); }
+        .contact button { background-color:#7C4DFF; color:white; padding:14px; border:none; border-radius:30px; font-size:18px; cursor:pointer; transition:0.3s ease; }
+        .contact button:hover { background-color:#5E35B1; transform:scale(1.05); }
+
+        footer { text-align:center; margin:40px 0 20px 0; color:#555; font-size:14px; }
+
+        @media (max-width:900px){
+        .features-grid { grid-template-columns:1fr; gap:20px; }
+        .features-grid button:nth-child(4), .features-grid button:nth-child(5){ grid-column:auto; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Career Compass</div>
+    <nav>
+        <a href="#top">Home</a>
+        <a href="#features">Features</a>
+        <a href="#">Assessment</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-buttons">
+        <button class="btn btn-login" onclick="window.location.href='login.html'">Login</button>
+        <button class="btn btn-register" onclick="window.location.href='register.html'">Register</button>
+    </div>
+</header>
+
+<div id="top"></div>
+
+<section class="hero">
+    <h1>Welcome To Career Compass</h1>
+    <p>Navigate your education and career path with interactive tools and expert guidance.</p>
+    <button id="central-assessment" class="btn-assessment">Take Free Assessment</button>
+</section>
+
+<section id="features" class="features">
+    <div class="features-grid">
+        <button class="feature-btn">
+            <img src="https://img.icons8.com/ios-filled/100/6C63FF/test-passed.png" alt="Take Free Assessment">
+            <span>Take Free Assessment</span>
+        </button>
+        <button class="feature-btn">
+            <img src="https://img.icons8.com/ios-filled/100/6C63FF/university.png" alt="Colleges/Universities">
+            <span>Colleges/Universities</span>
+        </button>
+        <button class="feature-btn">
+            <img src="https://img.icons8.com/ios-filled/100/6C63FF/school.png" alt="Schools">
+            <span>Schools</span>
+        </button>
+        <button class="feature-btn">
+            <img src="https://img.icons8.com/ios-filled/100/6C63FF/road.png" alt="Courses-To-Career Path">
+            <span>Courses-To-Career Path</span>
+        </button>
+        <button class="feature-btn">
+            <img src="https://img.icons8.com/ios-filled/100/6C63FF/diploma.png" alt="Scholarship Opportunities">
+            <span>Scholarship Opportunities</span>
+        </button>
+    </div>
+</section>
+
+<section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p>Have any questions or suggestions? Fill the form and we will get back to you!</p>
+    <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+
+<footer>
+    <p>&copy; 2025 Career Compass. All Rights Reserved.</p>
+</footer>
+
+<script>
+    // ————— JS with login + redirect logic —————
+    document.addEventListener("DOMContentLoaded", () => {
+    const featureButtons = document.querySelectorAll(".feature-btn");
+    const centralAssessmentBtn = document.getElementById("central-assessment");
+    const headerButtons = document.querySelector(".header-buttons");
+    const loggedInStudent = JSON.parse(localStorage.getItem("student")) || null;
+
+    // Update header if logged in
+    if(loggedInStudent){
+    headerButtons.innerHTML = `
+    <div class="profile" style="display:flex; align-items:center; gap:10px;">
+    <img src="https://img.icons8.com/ios-filled/50/6C63FF/user.png" alt="Profile" style="width:35px;height:35px;border-radius:50%;">
+    <span style="font-weight:500;">${loggedInStudent.name}</span>
+    <button class="btn btn-register" onclick="logout()">Logout</button>
+    </div>
+    `;
+    }
+
+    // Feature button click handling
+    featureButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+    if(!loggedInStudent){
+    alert("❌ Please login or register first!");
+    window.location.href = "login.html";
+    } else {
+    const featureName = btn.innerText.trim();
+
+    if(featureName === "Scholarship Opportunities"){
+    window.location.href = "scholarships.html";
+    } else if(featureName === "Take Free Assessment"){
+    window.location.href = "profile.html";
+    } else if(featureName === "Courses-To-Career Path"){
+    window.location.href = "course-to-career.html";
+    } else if(featureName === "Colleges/Universities"){
+    window.location.href = "/colleges";
+    } else if(featureName === "Schools"){
+    window.location.href = "school.html"; // ✅ new schools page
+    }
+    else {
+    alert(`You clicked ${featureName}`);
+    }
+    }
+    });
+    });
+
+    // Central assessment button check
+    centralAssessmentBtn.addEventListener("click", () => {
+    if(!loggedInStudent){
+    alert("❌ Please login or register first!");
+    window.location.href = "login.html";
+    } else {
+    window.location.href = "assessment.html";
+    }
+    });
+    });
+
+    function logout(){
+    localStorage.removeItem("student");
+    window.location.reload();
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Complete Your Profile - EduApp</title>
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Complete Your Profile</h2>
+
+    <form id="profileForm">
+        <input type="hidden" id="studentId" name="id">
+
+        <label for="className">Class:</label>
+        <input type="text" id="className" name="studentClass" required>
+
+        <label for="favoriteSubject">Favorite Subject:</label>
+        <input type="text" id="favoriteSubject" name="favoriteSubject" required>
+
+        <label for="aim">Career Aim:</label>
+        <input type="text" id="aim" name="aim" required>
+
+        <label for="hobby">Hobbies (comma separated):</label>
+        <input type="text" id="hobby" name="hobbies" required>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" min="5" max="100" required>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select your gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <button type="submit">Save Profile</button>
+    </form>
+</div>
+
+<script>
+    // ✅ Corrected login check using localStorage
+    const student = JSON.parse(localStorage.getItem("student"));
+    if (!student) {
+      alert("Please login first.");
+      window.location.href = "login.html";
+    } else {
+      document.getElementById("studentId").value = student.id;
+    }
+
+    // ✅ Handle form submission with fetch
+    document.getElementById("profileForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // build JSON from form
+      const data = {
+        id: document.getElementById("studentId").value,
+        studentClass: document.getElementById("className").value,
+        favoriteSubject: document.getElementById("favoriteSubject").value,
+        aim: document.getElementById("aim").value,
+        hobbies: document.getElementById("hobby").value.split(",").map(h => h.trim()),
+        age: document.getElementById("age").value,
+        gender: document.getElementById("gender").value
+      };
+
+      const res = await fetch("/students/updateProfile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        // ✅ After update redirect to instruction.html
+        window.location.href = "instruction.html";
+      } else {
+        const text = await res.text();
+        alert("Error updating profile: " + text);
+      }
+    });
+</script>
+
+
+</body>
+</html>

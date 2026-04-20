@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colleges & Universities in India</title>
+  <!-- Removed CSS link since all styles are inline -->
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 40px;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2rem;
+    }
+    .search-filter-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    .search-filter-container input,
+    .search-filter-container select {
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .card {
+        background-color: #fff;
+        padding: 20px;
+        width: 300px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .card h2 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+    .card p {
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+    }
+    .btn {
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+    .btn-remind {
+        background-color: #28a745;
+        margin-top: 10px;
+    }
+    .btn-remind:hover {
+        background-color: #1e7e34;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Colleges & Universities in India</h1>
+
+<div class="search-filter-container">
+  <input type="text" id="searchInput" placeholder="Search colleges...">
+  <select id="categoryFilter">
+    <option value="all">All Types</option>
+    <option value="private">Private</option>
+    <option value="government">Government</option>
+    <option value="deemed">Deemed University</option>
+  </select>
+</div>
+
+<div class="card-container">
+  <!-- Example cards -->
+  <div class="card" data-category="deemed" data-event-id="1">
+    <h2>Lovely Professional University (LPU)</h2>
+    <p>One of the largest private universities in India, offering programs in engineering, management, law, and more.</p>
+    <a href="https://www.lpu.in/" class="btn" target="_blank">Visit Website</a>
+    <button class="btn btn-remind">Remind Me</button>
+  </div>
+
+  <div class="card" data-category="private" data-event-id="2">
+    <h2>GL Bajaj Institute of Technology & Management</h2>
+    <p>A reputed private college offering B.Tech, MBA, and other professional courses in Greater Noida.</p>
+    <a href="https://www.glbajajgroup.org/" class="btn" target="_blank">Visit Website</a>
+    <button class="btn btn-remind">Remind Me</button>
+  </div>
+
+  <div class="card" data-category="private" data-event-id="3">
+    <h2>Galgotias University</h2>
+    <p>Offers UG, PG, and doctoral programs across engineering, management, law, and pharmacy.</p>
+    <a href="https://www.galgotiasuniversity.edu.in/" class="btn" target="_blank">Visit Website</a>
+    <button class="btn btn-remind">Remind Me</button>
+  </div>
+
+  <div class="card" data-category="private" data-event-id="4">
+    <h2>Galgotias College of Engineering and Technology</h2>
+    <p>Engineering college under Galgotias University providing B.Tech, M.Tech, and skill-based programs.</p>
+    <a href="https://www.galgotiascollege.edu.in/" class="btn" target="_blank">Visit Website</a>
+    <button class="btn btn-remind">Remind Me</button>
+  </div>
+
+  <div class="card" data-category="government" data-event-id="5">
+    <h2>Indian Institute of Technology (IIT) Delhi</h2>
+    <p>Premier government engineering and technology institute offering B.Tech, M.Tech, and research programs.</p>
+    <a href="https://home.iitd.ac.in/" class="btn" target="_blank">Visit Website</a>
+    <button class="btn btn-remind">Remind Me</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const cards = document.querySelectorAll(".card");
+
+    function filterCards() {
+      const query = searchInput.value.toLowerCase();
+      const category = categoryFilter.value;
+
+      cards.forEach(card => {
+        const title = card.querySelector("h2").innerText.toLowerCase();
+        const description = card.querySelector("p").innerText.toLowerCase();
+        const cardCategory = card.getAttribute("data-category");
+
+        const matchesSearch = title.includes(query) || description.includes(query);
+        const matchesCategory = category === "all" || cardCategory === category;
+
+        card.style.display = matchesSearch && matchesCategory ? "block" : "none";
+      });
+    }
+
+    searchInput.addEventListener("input", filterCards);
+    categoryFilter.addEventListener("change", filterCards);
+
+    // Remind Me buttons
+    const remindButtons = document.querySelectorAll(".btn-remind");
+    remindButtons.forEach((btn, index) => {
+      btn.addEventListener("click", async () => {
+        const card = cards[index];
+        const eventId = card.getAttribute("data-event-id");
+
+        try {
+          const response = await fetch(`/api/reminders/add/${eventId}`, {
+            method: "POST",
+            credentials: "include"
+          });
+
+          const message = await response.text();
+
+          if (response.status === 401) {
+            alert(message || "❌ You must be logged in to set a reminder.");
+            return;
+          }
+
+          if (!response.ok) throw new Error("Request failed");
+
+          alert(message || `✅ Reminder set for "${card.querySelector("h2").innerText}"`);
+        } catch (err) {
+          console.error(err);
+          alert("❌ Failed to set reminder. Please try again.");
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

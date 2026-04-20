@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Career Compass</title>
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="face" id="face">
+        <div class="eye" id="left-eye"><div class="pupil"></div></div>
+        <div class="eye" id="right-eye"><div class="pupil"></div></div>
+    </div>
+
+    <h2>Register</h2>
+
+    <form id="registerForm">
+        <input type="text" id="name" placeholder="Name" required><br>
+        <input type="email" id="email" placeholder="Email" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+        <button type="submit">Register</button>
+    </form>
+
+    <p id="message"></p>
+</div>
+
+<script>
+    const face = document.getElementById("face");
+    const passwordField = document.getElementById("password");
+    const leftPupil = document.querySelector("#left-eye .pupil");
+    const rightPupil = document.querySelector("#right-eye .pupil");
+
+    document.addEventListener("mousemove", e=>{
+      const rect = face.getBoundingClientRect();
+      const centerX = rect.left+rect.width/2;
+      const centerY = rect.top+rect.height/2;
+      const angleX = (e.clientX-centerX)/30;
+      const angleY = (e.clientY-centerY)/30;
+      leftPupil.style.transform = `translate(${angleX}px, ${angleY}px)`;
+      rightPupil.style.transform = `translate(${angleX}px, ${angleY}px)`;
+    });
+    passwordField.addEventListener("focus", ()=> face.classList.add("hide-eyes"));
+    passwordField.addEventListener("blur", ()=> face.classList.remove("hide-eyes"));
+
+    document.getElementById("registerForm").addEventListener("submit", async e=>{
+        e.preventDefault();
+        const data = { name: document.getElementById("name").value, email: document.getElementById("email").value, password: document.getElementById("password").value };
+        const res = await fetch("/students/register", { method:"POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify(data) });
+        const msg = document.getElementById("message");
+
+        if(res.ok){
+            msg.innerText = "✅ Registration successful! Redirecting to login...";
+            msg.classList.remove("error");
+            msg.classList.add("success");
+            setTimeout(()=> window.location.href="login.html", 1500);
+        } else {
+            const text = await res.text();
+            msg.innerText = "❌ " + text;
+            msg.classList.remove("success");
+            msg.classList.add("error");
+        }
+    });
+</script>
+
+</body>
+</html>

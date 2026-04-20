@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Scholarships in India</title>
+    <link rel="stylesheet" href="css/scholarships.css">
+</head>
+<body>
+<h1>Available Scholarships in India</h1>
+
+<div class="search-filter-container">
+    <input type="text" id="searchInput" placeholder="Search scholarships...">
+    <select id="categoryFilter">
+        <option value="all">All Categories</option>
+        <option value="national">National</option>
+        <option value="state">State</option>
+        <option value="private">Private</option>
+        <option value="international">International</option>
+    </select>
+</div>
+
+<div class="card-container">
+    <div class="card" data-category="national">
+        <h2>National Means-cum-Merit Scholarship (NMMS)</h2>
+        <p>This is for students in Class 9 to 12 who study in government schools and come from families with lower income. It gives ₹12,000 every year to help continue studies.</p>
+        <a href="https://scholarships.gov.in/ApplicationForm/login" class="btn" target="_blank">Apply</a>
+    </div>
+    <div class="card" data-category="national">
+        <h2>AICTE Pragati Scholarship for Girls</h2>
+        <p>For girl students admitted to AICTE-approved institutions. Provides ₹50,000 per year to support their education.</p>
+        <a href="https://fellowship.aicte.gov.in/" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="national">
+        <h2>AICTE Saksham Scholarship</h2>
+        <p>For differently-abled students with disability of 40% or more. Provides ₹50,000 per year for higher education.</p>
+        <a href="https://www.aicte.gov.in/schemes/students-development-schemes/Saksham/General-Instructions" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="national">
+        <h2>National Talent Search Examination (NTSE)</h2>
+        <p>For meritorious students up to Ph.D. level. Offers ₹1,250/month for Class 11-12 and ₹2,000/month for UG/PG courses.</p>
+        <a href="https://ncert.nic.in/national-talent-examination.php?ln=en" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="national">
+        <h2>Maulana Azad National Fellowship</h2>
+        <p>For students from minority communities pursuing M.Phil or Ph.D programs. Provides full fellowship support.</p>
+        <a href="https://www.indiascienceandtechnology.gov.in/nurturing-minds/scholarships/phd/maulana-azad-national-fellowship-minority-students-manf" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="national">
+        <h2>UGC National Fellowship for OBC Students</h2>
+        <p>Financial support for OBC category students pursuing postgraduate or doctoral studies in India.</p>
+        <a href="https://nbcfdc.gov.in/nbcfdc/web/nfobc#:~:text=The%20scheme%20is%20open%20to,scheme%20is%201000%20per%20year." class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="private">
+        <h2>JN Tata Endowment for Higher Education</h2>
+        <p>Loan scholarships up to ₹10 lakhs for Indian students pursuing higher studies abroad.</p>
+        <a href="https://jntataendowment.org/" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="international">
+        <h2>Fulbright-Nehru Master’s Fellowships</h2>
+        <p>Supports Indian students to pursue master’s degree programs in the U.S. covering tuition, living costs, and travel.</p>
+        <a href="https://www.usief.org.in/fulbright-fellowships/fellowships-for-indian-citizen/fulbright-nehru-masters-fellowships/" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="international">
+        <h2>Commonwealth Scholarships</h2>
+        <p>For Indian students to study postgraduate programs in the UK with full financial assistance.</p>
+        <a href="https://cscuk.fcdo.gov.uk/scholarships-filter-search/" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="national">
+        <h2>Central Sector Scheme of Scholarships (CSSS)</h2>
+        <p>This is for Class 12 students who score well in their board exams and whose family income is not very high. It gives ₹10,000 per year in college and ₹20,000 per year in post-graduation.</p>
+        <a href="https://www.education.gov.in/scholarships-education-loan-0-hi" class="btn" target="_blank">Apply</a>
+    </div>
+    <div class="card" data-category="private">
+        <h2>LIC Golden Jubilee Scholarship</h2>
+        <p>This is for students who score at least 60% in Class 10 or 12 and come from low-income families. It gives ₹20,000 to ₹40,000 every year to support further studies.</p>
+        <a href="https://licindia.in/golden-jubilee-foundation" class="btn" target="_blank">Apply</a>
+    </div>
+    <div class="card" data-category="national">
+        <h2>INSPIRE Scholarship</h2>
+        <p>This is for Class 12 students who are among the top scorers or have cleared exams like JEE/NEET. It supports students who choose to study science with ₹80,000 every year.</p>
+        <a href="https://online-inspire.gov.in/Content/guidelines.pdf" class="btn" target="_blank">Apply</a>
+    </div>
+    <div class="card" data-category="state">
+        <h2>Swami Vivekananda Merit-cum-Means Scholarship</h2>
+        <p>This is for students from West Bengal studying in Class 11 and above. It helps students from families with less income by giving ₹12,000 to ₹60,000 per year.</p>
+        <a href="https://svmcm.wb.gov.in/" class="btn" target="_blank">Apply</a>
+    </div>
+    <div class="card" data-category="private">
+        <h2>Sitaram Jindal Foundation Scholarship</h2>
+        <p>This is for students from Class 11 onwards whose family income is limited. It gives a monthly allowance between ₹500 and ₹2,500 to help with studies.</p>
+        <a href="https://www.sitaramjindalfoundation.org/scholarships-for-students-in-bangalore.php" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>E-Kalyan Scholarship (Jharkhand & Bihar)</h2>
+        <p>For SC, ST, and OBC students from Jharkhand and Bihar. Covers tuition fees and provides maintenance allowance for higher education.</p>
+        <a href="https://ekalyan.cgg.gov.in/" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>MahaDBT Scholarship (Maharashtra)</h2>
+        <p>Digital portal offering scholarships for backward classes, minority, and economically weaker students in Maharashtra.</p>
+        <a href="https://mahadbt.maharashtra.gov.in/home/flow" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>Kerala State Higher Education Council Scholarships</h2>
+        <p>Merit-based scholarships for UG and PG students in Kerala to promote higher education opportunities.</p>
+        <a href="https://scholarship.kshec.kerala.gov.in/" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>Mukhya Mantri Medhavi Vidyarthi Yojana (Madhya Pradesh)</h2>
+        <p>For students scoring 75% or above in Class 12. Provides full tuition fee reimbursement in government and private colleges.</p>
+        <a href="https://www.merayuva.mp.gov.in/scheme/mukhyamantri-meritorious-student-scheme" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>Odisha State Scholarship Schemes</h2>
+        <p>Multiple schemes for SC, ST, OBC, SEBC, and minority students of Odisha to pursue higher studies.</p>
+        <a href="https://scholarship.odisha.gov.in/website/home" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>Rajasthan Ambedkar International Scholarship Scheme</h2>
+        <p>For SC, ST, OBC, and minority students pursuing Ph.D. abroad. Provides full financial assistance for research studies.</p>
+        <a href="https://sje.rajasthan.gov.in/Scholarship_Portal.aspx" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>West Bengal Minority Scholarship (Aikyashree)</h2>
+        <p>For minority students from Class 11 up to Ph.D. level. Covers tuition fees and provides stipends for higher education.</p>
+        <a href="https://wbmdfcscholarship.in/" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>Delhi Post-Matric Scholarship Scheme</h2>
+        <p>For SC, ST, and OBC category students in Delhi pursuing higher education at college or university level.</p>
+        <a href="https://scstwelfare.delhi.gov.in/" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>Punjab State Post-Matric Scholarship</h2>
+        <p>For SC and OBC students of Punjab. Provides tuition fee coverage and maintenance allowance for higher studies.</p>
+        <a href="https://www.ssapunjab.org/scholarships/postmatric.html" class="btn" target="_blank">Apply</a>
+    </div>
+
+    <div class="card" data-category="state">
+        <h2>UP Scholarship (Uttar Pradesh)</h2>
+        <p>One of the largest state scholarships in India. Available for students from school level up to postgraduate courses, based on caste, income, and merit.</p>
+        <a href="https://scholarship.up.gov.in/" class="btn" target="_blank">Apply</a>
+    </div>
+</div>
+
+<script>
+    // script.js
+
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("searchInput");
+  const categoryFilter = document.getElementById("categoryFilter"); // dropdown
+  const cards = document.querySelectorAll(".card");
+
+  function filterCards() {
+    const query = searchInput.value.toLowerCase();
+    const category = categoryFilter.value; // dropdown value
+
+    cards.forEach(card => {
+      const title = card.querySelector("h2").innerText.toLowerCase();
+      const description = card.querySelector("p").innerText.toLowerCase();
+      const cardCategory = card.getAttribute("data-category"); // category from HTML attribute
+
+      const matchesSearch =
+        title.includes(query) || description.includes(query);
+
+      const matchesCategory =
+        category === "all" || cardCategory === category;
+
+      if (matchesSearch && matchesCategory) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+
+  // Trigger filtering when typing or changing dropdown
+  searchInput.addEventListener("input", filterCards);
+  categoryFilter.addEventListener("change", filterCards);
+});
+
+</script>
+
+</body>
+</html>
