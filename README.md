@@ -82,7 +82,6 @@ This project helps students:
 
 **Aman Kumar**
 
-* GitHub: https://github.com/iaman45
 
 
 
