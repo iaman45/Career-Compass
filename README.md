@@ -1,10 +1,9 @@
-# 🚀 Career Compass
+# Career Compass
 
 Career Compass is a smart student productivity and career guidance platform designed to help students manage their daily academic tasks, stay consistent, and move toward their career goals with structured planning.
 
----
 
-## 📌 Features
+## Features
 
 * 👤 User Authentication (Sign up / Login)
 * ✅ Daily Task & To-Do Management
@@ -14,9 +13,9 @@ Career Compass is a smart student productivity and career guidance platform desi
 * 📊 Productivity Monitoring
 * 📱 Clean and User-Friendly Interface
 
----
 
-## 🛠️ Tech Stack
+
+##  Tech Stack
 
 * **Backend:** Spring Boot
 * **Frontend:** (Add if you used – HTML/CSS/JS or React)
@@ -24,9 +23,9 @@ Career Compass is a smart student productivity and career guidance platform desi
 * **Tools:** IntelliJ / Eclipse / VS Code, Postman
 * **Build Tool:** Maven
 
----
 
-## ⚙️ Project Structure
+
+##  Project Structure
 
 ```
 Career-Compass/
@@ -37,9 +36,9 @@ Career-Compass/
 │── pom.xml              # Dependencies
 ```
 
----
 
-## 🚀 How to Run
+
+##  How to Run
 
 1. Clone the repository
 
@@ -59,9 +58,8 @@ Career-Compass/
    http://localhost:8080
    ```
 
----
 
-## 🎯 Use Case
+## Use Case
 
 This project helps students:
 
@@ -70,31 +68,32 @@ This project helps students:
 * Manage notes and reminders effectively
 * Build discipline through a reward system
 
----
 
-## 🔮 Future Enhancements
 
-* 📍 Location-based reminders
-* 🤖 AI-based career recommendations
-* 📊 Advanced analytics dashboard
-* 📱 Mobile app integration
+##  Future Enhancements
 
----
+* Location-based reminders
+* AI-based career recommendations
+* Advanced analytics dashboard
+* Mobile app integration
 
-## 👨‍💻 Author
+
+##  Author
 
 **Aman Kumar**
 
 * GitHub: https://github.com/iaman45
 
----
 
-## ⭐ Contribute
+
+## Contribute
 
 Contributions are welcome! Feel free to fork this repo and improve the project.
 
 ---
 
-## 📜 License
+##  License
 
 This project is open-source and available under the MIT License.
+
+**NOTE: The AI based result section is in under progress!**
