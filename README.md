@@ -5,13 +5,13 @@ Career Compass is a smart student productivity and career guidance platform desi
 
 ## Features
 
-* 👤 User Authentication (Sign up / Login)
-* ✅ Daily Task & To-Do Management
-* 📅 Calendar-based Reminder System
-* 📝 Upload and Manage Notes by Date
-* 🎯 Goal Tracking with Positive/Negative Points
-* 📊 Productivity Monitoring
-* 📱 Clean and User-Friendly Interface
+* User Authentication (Sign up / Login)
+* Daily Task & To-Do Management
+* Calendar-based Reminder System
+* Upload and Manage Notes by Date
+* Goal Tracking with Positive/Negative Points
+* Productivity Monitoring
+* Clean and User-Friendly Interface
 
 
 
